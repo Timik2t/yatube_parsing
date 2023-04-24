@@ -9,7 +9,8 @@ class YatubeSpider(scrapy.Spider):
     def parse(self, response):
         for post in response.css('div.card-body'):
             # Заменили return на yield.
-            text = ' '.join(t.strip() for t in post.css('p::text').getall()).strip()
+            text = ' '.join(t.strip()
+                            for t in post.css('p::text').getall()).strip()
             yield {
                 'text': text,
                 'author': post.css('.card-text strong::text').get(),
@@ -17,7 +18,8 @@ class YatubeSpider(scrapy.Spider):
             }
 
         # По CSS-селектору ищем ссылку на следующую страницу.
-        next_page = response.xpath("//a[contains(., 'Следующая')]/@href").get()
+        next_page = response.xpath(
+            "//a[contains(., 'Следующая')]/@href").get()
         if next_page is not None:
             # Если ссылка нашлась, загружаем страницу по ссылке
             # и вызываем метод parse() ещё раз.
