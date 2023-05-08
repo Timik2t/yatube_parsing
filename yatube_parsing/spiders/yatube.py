@@ -1,5 +1,7 @@
 import scrapy
 
+from yatube_parsing.items import YatubeParsingItem
+
 
 class YatubeSpider(scrapy.Spider):
     name = "yatube"
@@ -11,11 +13,13 @@ class YatubeSpider(scrapy.Spider):
             # Заменили return на yield.
             text = ' '.join(t.strip()
                             for t in post.css('p::text').getall()).strip()
-            yield {
+            data = {
                 'text': text,
                 'author': post.css('.card-text strong::text').get(),
                 'date': post.css('small.text-muted::text').get(),
             }
+            # Передаём словарь с данными в конструктор класса
+            yield YatubeParsingItem(data)
 
         # По CSS-селектору ищем ссылку на следующую страницу.
         next_page = response.xpath(
