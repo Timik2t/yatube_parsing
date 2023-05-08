@@ -7,4 +7,16 @@ class GroupSpider(scrapy.Spider):
     start_urls = ["http://51.250.32.185/"]
 
     def parse(self, response):
-        pass
+        all_groups = response.css('a.group_link::attr(href)')
+        for group_link in all_groups:
+            yield response.follow(group_link, callback=self.parse_group)
+        next_page = response.css('li.next a::attr(href)').get()
+        if next_page is not None:
+            yield response.follow(next_page, callback=self.parse)
+
+    def parse_group(self, response):
+        yield {
+            'group_name': response.css('h2::text').get().strip(),
+            'descropton': response.css('p.group_descr::text').get().strip(),
+            'posts_count': int(response.css('li.list-group-item div.posts_count::text').get().strip().replace('Записей: ', '')),
+        }
