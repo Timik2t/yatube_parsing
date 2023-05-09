@@ -23,7 +23,11 @@ git clone git@github.com:Timik2t/yatube_parsing.git
 2. Активируйте venv и установите зависимости:
 ```
 python3 -m venv venv
+```
+```
 source venv/bin/activate
+```
+```
 pip install -r requirements.txt
 ```
 3. Проект готов к запуску.
