@@ -43,7 +43,6 @@
     ```bash
     pip install -r requirements.txt
     ```
-3. Проект готов к запуску.
 
 ## Запуск и управление:
 - Запуск паука **yatube**:
