@@ -11,30 +11,43 @@
 - **group** - осуществляет поиск на всех страницах сайта ссылок на существующие группы, переходит на страницы групп и выводит в файл .csv информацию о группе и количество постов в ней.
 
 ## Ключевые технологии и библиотеки:
-- [Python](https://www.python.org/);
-- [Scrapy](https://pypi.org/project/Scrapy/);
-- [SQLAlchemy](https://pypi.org/project/SQLAlchemy/);
+- [Python](https://www.python.org/)
+- [Scrapy](https://pypi.org/project/Scrapy/)
+- [SQLAlchemy](https://pypi.org/project/SQLAlchemy/)
 
-## Установка
-1. Склонируйте репозиторий:
-```
-git clone git@github.com:Timik2t/yatube_parsing.git
-```
-2. Активируйте venv и установите зависимости:
-```
-python3 -m venv venv
-```
-```
-source venv/bin/activate
-```
-```
-pip install -r requirements.txt
-```
+## Подготовка к запуску
+
+1. Склонировать репозиторий на локальную машину:
+
+    ```bash
+    git clone git@github.com:Timik2t/yatube_parsing.git
+    ```
+
+2. Создать и активировать виртуальное окружение:
+
+    ```bash
+    python -m venv venv
+    ```
+
+    Активация окружения
+    ```bash
+    # Windows
+    source venv/Scripts/activate
+    ```
+    ```bash
+    # Linux
+    source venv/bin/activate
+    ```
+3. Установить зависимости:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
 3. Проект готов к запуску.
 
-## Управление:
+## Запуск и управление:
 - Запуск паука **yatube**:
-```
+```bash
 scrapy crawl yatube
 ```
 Будет создана база данных sqlite.db и заполнена только постами, написанными в понедельник.
@@ -42,23 +55,23 @@ scrapy crawl yatube
 ---
 
 - Запуск паука **group**:
-```
+```bash
 scrapy crawl group -O <имя_файла>.csv
 ```
 Будет создан файл <имя_файла>.csv с полученными данными.
 
 ---
 
-- Альтернативный запуск паука **yatube** для сбора данных обо всех постах:
+## Альтернативный запуск паука **yatube** для сбора данных обо всех постах:
 1. В файле settings.py необходимо закомментировать строки:
-    ```
+    ```bash
     ITEM_PIPELINES = {
     'yatube_parsing.pipelines.MondayPipeline': 300,
     }
     ```
 2. Сохраните файл;
 3. Выполните команду:
-    ```
+    ```bash
     scrapy crawl yatube -O <имя_файла>.csv
     ```
 Будет создан файл <имя_файла>.csv с данными из всех постов на сайте.
